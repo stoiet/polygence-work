@@ -6,6 +6,8 @@ authors = ["Robert Beretka <to.stoiet@gmail.com>"]
 
 [tool.poetry.dependencies]
 python = "^3.9"
+psycopg2 = "^2.9.1"
+Django = "^3.2.7"
 
 [tool.poetry.dev-dependencies]
 pytest = "^6.2.5"
