@@ -14,6 +14,11 @@ services:
               DEBIAN_VERSION: ${DEBIAN_VERSION}
               POETRY_VERSION: ${POETRY_VERSION}
 
+        environment:
+            DATABASE_USER: ${POSTGRES_USER}
+            DATABASE_PASSWORD: ${POSTGRES_PASSWORD}
+            DATABASE_NAME: ${POSTGRES_DB}
+
         ports:
             - '127.0.0.1:5000:5000'
 
@@ -33,7 +38,7 @@ services:
             - '127.0.0.1:5432:5432'
 
         volumes:
-            - ../../.database:/data/postgres
+            - ../../.databases:/data/postgres
 
     database-admin:
         image: dpage/pgadmin4:latest
