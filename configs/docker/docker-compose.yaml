@@ -19,3 +19,29 @@ services:
 
         volumes:
             - ../../:/usr/user/workdir
+
+    database:
+        image: postgres:latest
+        restart: always
+
+        environment:
+            POSTGRES_USER: ${POSTGRES_USER}
+            POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+            POSTGRES_DB: ${POSTGRES_DB}
+
+        ports:
+            - '127.0.0.1:5432:5432'
+
+        volumes:
+            - ../../.database:/data/postgres
+
+    database-admin:
+        image: dpage/pgadmin4:latest
+        restart: always
+
+        environment:
+            PGADMIN_DEFAULT_EMAIL: admin@admin.org
+            PGADMIN_DEFAULT_PASSWORD: admin
+
+        ports:
+            - '127.0.0.1:8080:80'

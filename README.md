@@ -21,3 +21,15 @@ make help
 make build
 make install
 ```
+
+#### Database setup
+
+```
+make database
+make database-admin
+```
+
+```
+localhost:8080 (admin@admin.org / admin)
+database:5432 (admin / admin)
+```

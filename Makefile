@@ -9,6 +9,9 @@ DOCKER_COMPOSE_FILE			:= ./configs/docker/docker-compose.yaml
 IMAGE_NAME 					:= polygence-work
 IMAGE_TAG					:= $(or ${IMAGE_TAG}, ${IMAGE_TAG}, latest)
 CONTAINER_ID				:= $(or ${CONTAINER_ID}, ${CONTAINER_ID}, `date +%s`)
+POSTGRES_USER				:= $(or ${POSTGRES_USER}, ${POSTGRES_USER}, admin)
+POSTGRES_PASSWORD			:= $(or ${POSTGRES_PASSWORD}, ${POSTGRES_PASSWORD}, admin)
+POSTGRES_DB					:= $(or ${POSTGRES_DB}, ${POSTGRES_DB}, database)
 
 help:
 	@fgrep -h "##" $(MAKEFILE_LIST) | fgrep -v fgrep | sed -e 's/\\$$//' | sed -e 's/\(.*\):.*##[ \t]*/    \1 ## /' | column -t -s '##'
@@ -31,6 +34,12 @@ containers: ## List project containers
 
 bash: ## Run bash shell
 	$(call docker_compose_run) bash
+
+database: ## Start database container
+	$(call docker_compose) up --detach database
+
+database-admin: ## Start database admin panel container
+	$(call docker_compose) up --detach database-admin
 
 
 ## Check commands:
@@ -72,7 +81,10 @@ define docker_compose_file_variables
 	CONTAINER_ID=$(CONTAINER_ID) \
 	DEBIAN_VERSION=$(DEBIAN_VERSION) \
 	PYTHON_VERSION=$(PYTHON_VERSION) \
-	POETRY_VERSION=$(POETRY_VERSION)
+	POETRY_VERSION=$(POETRY_VERSION) \
+	POSTGRES_USER=$(POSTGRES_USER) \
+	POSTGRES_PASSWORD=$(POSTGRES_PASSWORD) \
+	POSTGRES_DB=$(POSTGRES_DB)
 endef
 
 define check_python
