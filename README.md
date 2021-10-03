@@ -33,3 +33,10 @@ make database-admin
 localhost:8080 (admin@admin.org / admin)
 database:5432 (admin / admin)
 ```
+
+#### Start server
+
+```
+make migrate
+make start
+```
