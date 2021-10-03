@@ -66,13 +66,19 @@ test: ## Run test cases
 pylint: ## Run pylint
 	$(call docker_compose_run) bash -c "poetry run pylint src"
 
+migrate: ## Run database migrations
+	$(call docker_compose_run) bash -c "poetry run python manage.py migrate"
+
+start: ## Start service
+	$(call docker_compose_run) bash -c "poetry run python manage.py runserver 0.0.0.0:5000"
+
 
 define docker_compose
 	$(call docker_compose_file_variables) docker-compose --file $(DOCKER_COMPOSE_FILE) --project-name $(IMAGE_NAME)
 endef
 
 define docker_compose_run
-	$(call docker_compose) run --name $(IMAGE_NAME)-$(CONTAINER_ID) --user=user --use-aliases --no-deps --rm $(IMAGE_NAME)
+	$(call docker_compose) run --name $(IMAGE_NAME)-$(CONTAINER_ID) --user=user --use-aliases --no-deps --service-ports --rm $(IMAGE_NAME)
 endef
 
 define docker_compose_file_variables
