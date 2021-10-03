@@ -70,7 +70,7 @@ migrate: ## Run database migrations
 	$(call docker_compose_run) bash -c "poetry run python manage.py migrate"
 
 start: ## Start service
-	$(call docker_compose_run) bash -c "poetry run python manage.py runserver 0.0.0.0:5000"
+	$(call docker_compose_start) bash -c "poetry run python manage.py runserver 0.0.0.0:5000"
 
 
 define docker_compose
@@ -78,7 +78,11 @@ define docker_compose
 endef
 
 define docker_compose_run
-	$(call docker_compose) run --name $(IMAGE_NAME)-$(CONTAINER_ID) --user=user --use-aliases --no-deps --service-ports --rm $(IMAGE_NAME)
+	$(call docker_compose) run --name $(IMAGE_NAME)-$(CONTAINER_ID) --user=user --use-aliases --no-deps --rm $(IMAGE_NAME)
+endef
+
+define docker_compose_start
+	$(call docker_compose) run --name $(IMAGE_NAME)-$(CONTAINER_ID) --user=user --use-aliases --service-ports --rm $(IMAGE_NAME)
 endef
 
 define docker_compose_file_variables
