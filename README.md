@@ -46,6 +46,11 @@ make start (http://127.0.0.1:5000/api/spendings/)
 curl -X GET "http://127.0.0.1:5000/api/spendings/"
 ```
 
+- Filtering
+```
+curl -X GET "http://127.0.0.1:5000/api/spendings/?currency=HUF"
+```
+
 - POST /api/spendings
 ```
 curl -d '{"amount": 1200, "currency": "HUF", "description": "food"}' -H "Content-Type: application/json" -X POST "http://127.0.0.1:5000/api/spendings/"

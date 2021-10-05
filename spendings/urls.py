@@ -6,7 +6,7 @@ from spendings.views import SpendingsViewSet
 
 router = routers.DefaultRouter()
 
-router.register(r'spendings', SpendingsViewSet)
+router.register(r'spendings', SpendingsViewSet, 'spendings')
 
 urlpatterns = [
    path('', include(router.urls)),

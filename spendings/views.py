@@ -6,8 +6,16 @@ from spendings.models import Spendings
 
 
 class SpendingsViewSet(viewsets.ModelViewSet):
-    queryset = Spendings.objects.all()
     serializer_class = SpendingsSerializer
+
+    def get_queryset(self):
+        spendings = Spendings.objects.all()
+        currency = self.request.query_params.get('currency')
+        
+        if currency:
+            spendings = spendings.filter(currency=currency)
+
+        return spendings
 
     def delete(self, request, *args, **kwargs):
         pk = self.kwargs.get('pk')
@@ -22,9 +30,9 @@ class SpendingsViewSet(viewsets.ModelViewSet):
         serializer.is_valid(raise_exception=True)
 
         instance = Spendings.objects.filter(pk=pk).first() 
-        instance.amount = request.data.get("amount")
-        instance.currency = request.data.get("currency")
-        instance.description = request.data.get("description")
+        instance.amount = request.data.get('amount')
+        instance.currency = request.data.get('currency')
+        instance.description = request.data.get('description')
         instance.save()
 
         return Response(serializer.data)
