@@ -61,7 +61,7 @@ install: ## Install project dependencies
 	$(call docker_compose_run) bash -c "poetry env use /usr/local/bin/python && poetry install"
 
 test: ## Run test cases
-	$(call docker_compose_run) bash -c "poetry run pytest"
+	$(call docker_compose_run) bash -c "poetry run python manage.py test"
 
 pylint: ## Run pylint
 	$(call docker_compose_run) bash -c "poetry run pylint src"
