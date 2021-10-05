@@ -55,3 +55,8 @@ curl -d '{"amount": 1200, "currency": "HUF", "description": "food"}' -H "Content
 ```
 curl -X DELETE "http://127.0.0.1:5000/api/spendings/1/"
 ```
+
+- PUT /api/spendings/<id>/
+```
+curl -d '{"amount": 1300, "currency": "HUF", "description": "food"}' -H "Content-Type: application/json" -X PUT "http://127.0.0.1:5000/api/spendings/1/"
+```

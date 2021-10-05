@@ -1,15 +1,30 @@
 from rest_framework import viewsets
+from rest_framework.response import Response
 
 from spendings.serializers import SpendingsSerializer
 from spendings.models import Spendings
 
 
 class SpendingsViewSet(viewsets.ModelViewSet):
-   queryset = Spendings.objects.all()
-   serializer_class = SpendingsSerializer
+    queryset = Spendings.objects.all()
+    serializer_class = SpendingsSerializer
 
-   def delete(self, request, *args, **kwargs):
+    def delete(self, request, *args, **kwargs):
         pk = self.kwargs.get('pk')
-        snippet = self.get_object(pk)
-        snippet.delete()
+        instance = self.get_object(pk)
+        instance.delete()
         return Response(status=status.HTTP_204_NO_CONTENT)
+
+    def update(self, request, *args, **kwargs):
+        pk = self.kwargs.get('pk')
+
+        serializer = SpendingsSerializer(data=request.data)
+        serializer.is_valid(raise_exception=True)
+
+        instance = Spendings.objects.filter(pk=pk).first() 
+        instance.amount = request.data.get("amount")
+        instance.currency = request.data.get("currency")
+        instance.description = request.data.get("description")
+        instance.save()
+
+        return Response(serializer.data)
