@@ -38,5 +38,20 @@ database:5432 (admin / admin)
 
 ```
 make migrate
-make start
+make start (http://127.0.0.1:5000/api/spendings/)
+```
+
+- GET /api/spendings
+```
+curl -X GET "http://127.0.0.1:5000/api/spendings/"
+```
+
+- POST /api/spendings
+```
+curl -d '{"amount": 1200, "currency": "HUF", "description": "food"}' -H "Content-Type: application/json" -X POST "http://127.0.0.1:5000/api/spendings/"
+```
+
+- DELETE /api/spendings/<id>/
+```
+curl -X DELETE "http://127.0.0.1:5000/api/spendings/1/"
 ```

@@ -8,7 +8,8 @@ class SpendingsViewSet(viewsets.ModelViewSet):
    queryset = Spendings.objects.all()
    serializer_class = SpendingsSerializer
 
-   def delete(self, request, pk, format=None):
+   def delete(self, request, *args, **kwargs):
+        pk = self.kwargs.get('pk')
         snippet = self.get_object(pk)
         snippet.delete()
         return Response(status=status.HTTP_204_NO_CONTENT)
