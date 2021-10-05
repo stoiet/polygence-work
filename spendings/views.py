@@ -9,7 +9,7 @@ class SpendingsViewSet(viewsets.ModelViewSet):
     serializer_class = SpendingsSerializer
 
     def get_queryset(self):
-        spendings = Spendings.objects.all()
+        spendings = Spendings.objects.order_by('amount').all()
         currency = self.request.query_params.get('currency')
         
         if currency:
